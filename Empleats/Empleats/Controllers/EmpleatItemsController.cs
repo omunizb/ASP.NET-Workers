@@ -35,7 +35,13 @@ namespace Empleats.Controllers
 
         // GET: api/EmpleatItems/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<EmpleatItem>> GetEmpleatItem(long id)
+
+        public string GetEmpleatItem(string id)
+        {
+            // Adapted from https://stackoverflow.com/a/4405876
+            return $"hello, {id.First().ToString().ToUpper() + id.Substring(1)}";
+        }
+        /* public async Task<ActionResult<EmpleatItem>> GetEmpleatItem(long id)
         {
             var empleatItem = await _context.EmpleatItems.FindAsync(id);
 
@@ -45,7 +51,7 @@ namespace Empleats.Controllers
             }
 
             return empleatItem;
-        }
+        } */
 
         // PUT: api/EmpleatItems/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
