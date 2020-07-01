@@ -6,11 +6,13 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Empleats.Models;
+using Microsoft.AspNetCore.Cors;
 
 namespace Empleats.Controllers
 {
-    [Route("api/Employees")]
+    [Route("api/employees")]
     [ApiController]
+    [EnableCors("EmployeesPolicy")]
     public class EmployeesController : ControllerBase
     {
         private readonly EmployeeContext _context;
@@ -20,14 +22,14 @@ namespace Empleats.Controllers
             _context = context;
         }
 
-        // GET: api/EmpleatItems
+        // GET: api/employees
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Employee>>> GetEmployees()
         {
             return await _context.Employees.ToListAsync();
         }
 
-        // GET: api/EmpleatItems/5
+        // GET: api/employees/5
         [HttpGet("{id}")]
 
         public async Task<ActionResult<Employee>> GetEmpleatItem(long id)
@@ -42,7 +44,7 @@ namespace Empleats.Controllers
             return empleatItem;
         }
 
-        // PUT: api/EmpleatItems/5
+        // PUT: api/employees/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
@@ -74,7 +76,7 @@ namespace Empleats.Controllers
             return NoContent();
         }
 
-        // POST: api/EmpleatItems
+        // POST: api/employees
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]

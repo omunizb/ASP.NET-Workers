@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Empleats.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Empleats
 {
@@ -23,6 +24,13 @@ namespace Empleats
             services.AddDbContext<EmployeeContext>(opt =>
                opt.UseInMemoryDatabase("EmployeeList"));
             services.AddControllers();
+
+            services.AddCors(o => o.AddPolicy("EmployeesPolicy", builder =>
+            {
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,6 +44,8 @@ namespace Empleats
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("EmployeesPolicy");
 
             app.UseAuthorization();
 
