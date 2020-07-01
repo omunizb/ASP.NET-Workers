@@ -31,14 +31,33 @@ function getEmployeeById() {
       });
 }
 
-function postEmployee() {
-    var id = parseInt(document.getElementById("id").value);
-    var name = document.getElementById("name").value;
-    var surname = document.getElementById("surname").value;
-    var job = document.getElementById("job").value;
-    var salary = parseFloat(document.getElementById("salary").value);
-    var Employee = { Id: id, Name: name, Surname: surname, Job: job, Salary: salary };
+var id, name, surname, job, salary, Employee;
+
+function submitEmployee() {
+    id = parseInt(document.getElementById("id").value);
+    name = document.getElementById("name").value;
+    surname = document.getElementById("surname").value;
+    job = document.getElementById("job").value;
+    salary = parseFloat(document.getElementById("salary").value);
+    Employee = { Id: id, Name: name, Surname: surname, Job: job, Salary: salary };
     Employee = JSON.stringify(Employee);
+    var chosenMethod = document.getElementById("methods");
+    chosenMethod = chosenMethod.options[chosenMethod.selectedIndex].value;
+    if (chosenMethod == "post")
+    {
+        postEmployee();
+    }
+    else if (chosenMethod == "put")
+    {
+        putEmployee();
+    }
+    else
+    {
+        console.log("You must choose an HTTP method.");
+    }
+}
+
+function postEmployee() {
     $.ajax({
         method: "POST",
         url: baseURL + "api/employees",
@@ -49,6 +68,24 @@ function postEmployee() {
             alert("The new employee was added successfully.");
         },
         error: function(error) {
+            alert("That eployee ID may already exist");
+            console.log(error);
+        }
+      });
+}
+
+function putEmployee() {
+    $.ajax({
+        method: "PUT",
+        url: `${baseURL}api/employees/${id}`,
+        data: Employee,
+        dataType: "json",
+        contentType: "application/json",
+        success: function() {
+            alert(`The employee with ID ${id} was updated successfully.`);
+        },
+        error: function(error) {
+            alert("That eployee ID may not exist");
             console.log(error);
         }
       });

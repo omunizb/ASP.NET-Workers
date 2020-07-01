@@ -28,7 +28,12 @@
         <input type="text" id="job" name="job">
         <label for="salary">Salary: </label>
         <input type="text" id="salary" name="salary">
-        <button id="btnPostEmployee" onclick="postEmployee()">Add</button>
+        <label for="methods">Do you want to add a new employee, or update an existing one?</label>
+        <select name="methods" id="methods">
+            <option value="post">POST (add)</option>
+            <option value="put">PUT (update)</option>
+        </select>
+        <button id="btnSubmitEmployee" onclick="submitEmployee()">Submit</button>
     </div>
     <div>
         <h3>Remove an employee by ID:</h3>
